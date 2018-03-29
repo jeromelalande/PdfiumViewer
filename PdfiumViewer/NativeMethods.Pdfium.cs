@@ -455,6 +455,86 @@ namespace PdfiumViewer
             }
         }
 
+        public static IntPtr FPDFPage_GetAnnot(IntPtr page, int index)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPage_GetAnnot(page, index);
+            }
+        }
+
+        public static int FPDFPage_GetAnnotCount(IntPtr page)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPage_GetAnnotCount(page);
+            }
+        }
+
+        public static FPDF_ANNOT_SUBTYPE FPDFAnnot_GetAnnotSubtype(IntPtr annot)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFAnnot_GetSubtype(annot);
+            }
+        }
+
+        public static int FPDFAnnot_GetObjectCount(IntPtr annot)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFAnnot_GetObjectCount(annot);
+            }
+        }
+
+        public static IntPtr FPDFAnnot_GetObject(IntPtr annot, int index)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFAnnot_GetObject(annot, index);
+            }
+        }
+
+        public static uint FPDFAttach_GetName(IntPtr annot, StringBuilder buffer, uint blenth)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFAttachment_GetName(annot, buffer, blenth);
+            }
+        }
+
+        public static int FPDFPageObj_GetName(IntPtr pageObject)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPageObj_GetType(pageObject);
+            }
+        }
+
+        public static int FPDFPath_CountSegments(IntPtr pathObject)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPath_CountSegments(pathObject);
+            }
+        }
+
+        public static IntPtr FPDFPath_GetPathSegment(IntPtr pathObject, int index)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPath_GetPathSegment(pathObject, index);
+            }
+        }
+
+        public static int FPDFPathSegment_GetType(IntPtr pathSegment)
+        {
+            lock (LockString)
+            {
+                return Imports.FPDFPathSegment_GetType(pathSegment);
+            }
+        }
+
         #region Save / Edit Methods
 
         public static void FPDFPage_SetRotation(IntPtr page, PdfRotation rotation)
@@ -753,6 +833,41 @@ namespace PdfiumViewer
             [DllImport("pdfium.dll")]
             public static extern uint FPDF_GetMetaText(IntPtr document, string tag, byte[] buffer, uint buflen);
 
+            [DllImport("pdfium.dll")]
+            public static extern int FPDFPage_GetAnnotCount(IntPtr page);
+
+            [DllImport("pdfium.dll")]
+            public static extern IntPtr FPDFPage_GetAnnot(IntPtr page, int index);
+
+            [DllImport("pdfium.dll")]
+            public static extern FPDF_ANNOT_SUBTYPE FPDFAnnot_GetSubtype(IntPtr annot);
+
+            [DllImport("pdfium.dll")]
+            public static extern int FPDFAnnot_GetObjectCount(IntPtr annot);
+
+            [DllImport("pdfium.dll")]
+            public static extern IntPtr FPDFAnnot_GetObject(IntPtr annot, int index);
+
+            [DllImport("pdfium.dll")]
+            public static extern IntPtr FPDFDoc_GetAttachmentCount(IntPtr document);
+
+            [DllImport("pdfium.dll")]
+            public static extern uint FPDFAttachment_GetName(IntPtr attachment,
+                StringBuilder buffer,
+                uint buflen);
+
+            [DllImport("pdfium.dll")]
+            public static extern int FPDFPageObj_GetType(IntPtr page_object);
+
+            [DllImport("pdfium.dll")]
+            public static extern int FPDFPath_CountSegments(IntPtr pathObject);
+
+            [DllImport("pdfium.dll")]
+            public static extern IntPtr FPDFPath_GetPathSegment(IntPtr pathObject, int index);
+
+            [DllImport("pdfium.dll")]
+            public static extern int FPDFPathSegment_GetType(IntPtr pathSegment);
+
             #region Save/Edit APIs
 
             [DllImport("pdfium.dll")]
@@ -949,6 +1064,48 @@ namespace PdfiumViewer
             FPDF_ERR_PASSWORD = 4,		// Password required or incorrect password.
             FPDF_ERR_SECURITY = 5,		// Unsupported security scheme.
             FPDF_ERR_PAGE = 6		// Page not found or content error.
+        }
+
+        public enum FPDF_ANNOT_SUBTYPE 
+        {
+            FPDF_ANNOT_UNKNOWN = 0,
+            FPDF_ANNOT_TEXT = 1,
+            FPDF_ANNOT_LINK = 2,
+            FPDF_ANNOT_FREETEXT = 3,
+            FPDF_ANNOT_LINE = 4,
+            FPDF_ANNOT_SQUARE = 5,
+            FPDF_ANNOT_CIRCLE = 6,
+            FPDF_ANNOT_POLYGON = 7,
+            FPDF_ANNOT_POLYLINE = 8,
+            FPDF_ANNOT_HIGHLIGHT = 9,
+            FPDF_ANNOT_UNDERLINE = 10,
+            FPDF_ANNOT_SQUIGGLY = 11,
+            FPDF_ANNOT_STRIKEOUT = 12,
+            FPDF_ANNOT_STAMP = 13,
+            FPDF_ANNOT_CARET = 14,
+            FPDF_ANNOT_INK = 15,
+            FPDF_ANNOT_POPUP = 16,
+            FPDF_ANNOT_FILEATTACHMENT = 17,
+            FPDF_ANNOT_SOUND = 18,
+            FPDF_ANNOT_MOVIE = 19,
+            FPDF_ANNOT_WIDGET = 20,
+            FPDF_ANNOT_SCREEN = 21,
+            FPDF_ANNOT_PRINTERMARK = 22,
+            FPDF_ANNOT_TRAPNET = 23,
+            FPDF_ANNOT_WATERMARK = 24,
+            FPDF_ANNOT_THREED = 25,
+            FPDF_ANNOT_RICHMEDIA = 26,
+            FPDF_ANNOT_XFAWIDGET = 27
+        }
+
+        public enum FPDF_PAGEOBJ
+        {
+            FPDF_PAGEOBJ_UNKNOWN = 0,
+            FPDF_PAGEOBJ_TEXT = 1,
+            FPDF_PAGEOBJ_PATH = 2,
+            FPDF_PAGEOBJ_IMAGE = 3,
+            FPDF_PAGEOBJ_SHADING = 4,
+            FPDF_PAGEOBJ_FORM = 5
         }
 
         #region Save/Edit Structs and Flags

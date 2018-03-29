@@ -211,6 +211,29 @@ namespace PdfiumViewer
         string GetPdfText(PdfTextSpan textSpan);
 
         /// <summary>
+        /// Get annotation count on the page.
+        /// </summary>
+        /// <param name="page">The page to get the annotation count for.</param>
+        /// <returns>Number of annotations on the page.</returns>
+        int GetAnnotationCount(int page);
+
+        /// <summary>
+        /// Get the annotation type of a specific annotation on the page.
+        /// </summary>
+        /// <param name="page">The page to get the annotation from.</param>
+        /// <param name="index">Index of the annotation to get the type</param>
+        /// <returns>Type of the annotation.</returns>
+        string GetAnnotationSubtype(int page, int index);
+
+        /// <summary>
+        /// Get the object count of a specific annotation on the page.
+        /// </summary>
+        /// <param name="page">The page to get the annotation from.</param>
+        /// <param name="index">Index of the annotation to get the count of objects</param>
+        /// <returns>Object count of the annotation.</returns>
+        int GetAnnotationObjectCount(int page, int index);
+
+        /// <summary>
         /// Get all bounding rectangles for the text span.
         /// </summary>
         /// <description>

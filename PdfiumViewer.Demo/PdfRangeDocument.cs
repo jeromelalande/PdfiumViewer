@@ -253,6 +253,21 @@ namespace PdfiumViewer.Demo
             return _document.GetPdfText(textSpan);
         }
 
+        public int GetAnnotationCount(int page)
+        {
+            return _document.GetAnnotationCount(TranslatePage(page));
+        }
+
+        public string GetAnnotationSubtype(int page, int index)
+        {
+            return _document.GetAnnotationSubtype(TranslatePage(page), index);
+        }
+
+        public int GetAnnotationObjectCount(int page, int index)
+        {
+            return _document.GetAnnotationObjectCount(TranslatePage(page), index);
+        }
+
         public IList<PdfRectangle> GetTextBounds(PdfTextSpan textSpan)
         {
             var result = new List<PdfRectangle>();

@@ -592,6 +592,62 @@ namespace PdfiumViewer
             return null;
         }
 
+        public int GetAnnotationCount(int page)
+        {
+            using (var pageData = new PageData(_document, _form, page))
+            {
+                int annotCount = NativeMethods.FPDFPage_GetAnnotCount(pageData.Page);
+                return annotCount;
+            }
+        }
+        
+        public string GetAnnotationSubtype(int page, int index)
+        {
+            using (var pageData = new PageData(_document, _form, page))
+            {
+                IntPtr annotation = NativeMethods.FPDFPage_GetAnnot(pageData.Page, index);
+                var annotType = NativeMethods.FPDFAnnot_GetAnnotSubtype(annotation);
+
+                return annotType.ToString("G");
+            }
+        }
+
+        public int GetAnnotationObjectCount(int page, int index)
+        {
+            using (var pageData = new PageData(_document, _form, page))
+            {
+                IntPtr annotation = NativeMethods.FPDFPage_GetAnnot(pageData.Page, index);
+                int objectCount = NativeMethods.FPDFAnnot_GetObjectCount(annotation);
+
+                return objectCount;
+            }
+        }
+
+        public void GetAnnotationObjectTest(int page, int index)
+        {
+            using (var pageData = new PageData(_document, _form, page))
+            {
+                IntPtr annotation = NativeMethods.FPDFPage_GetAnnot(pageData.Page, index);
+                // gets a FPDF_PageObject
+                IntPtr annotObject = NativeMethods.FPDFAnnot_GetObject(annotation, index);
+
+                // type of page object
+                // Type 2 = 
+                var typePageObj = NativeMethods.FPDFPageObj_GetName(annotObject);
+                if (typePageObj == (int) NativeMethods.FPDF_PAGEOBJ.FPDF_PAGEOBJ_PATH)
+                {
+                    int numSeg = NativeMethods.FPDFPath_CountSegments(annotObject);
+
+                    for (int i = 0; i < numSeg; i++)
+                    {
+                        var pathSeg = NativeMethods.FPDFPath_GetPathSegment(annotObject, i);
+                        var segType = NativeMethods.FPDFPathSegment_GetType(pathSeg);
+                    }
+                }
+
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);

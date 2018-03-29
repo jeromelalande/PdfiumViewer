@@ -378,5 +378,26 @@ namespace PdfiumViewer.Demo
                 form.ShowDialog(this);
             }
         }
+
+        private void _getAnnots_Click(object sender, EventArgs e)
+        {
+            int page = pdfViewer1.Renderer.Page;
+            int annotCount = pdfViewer1.Document.GetAnnotationCount(page);
+            string text = string.Format("Page {0} contains {1} annotation(s)", page + 1, annotCount);
+
+            for (int i = 0; i < annotCount; i++)
+            {
+                var annotType = pdfViewer1.Document.GetAnnotationSubtype(page, i);
+                var objectCount = pdfViewer1.Document.GetAnnotationObjectCount(page, i);
+                text += $"\r\nAnnotation {i + 1} : subtype {annotType}, objects {objectCount}";
+
+                if (annotType.Contains("ANNOT"))
+                {
+                    ((PdfDocument) pdfViewer1.Document).GetAnnotationObjectTest(page, i);
+                }
+            }
+
+            MessageBox.Show(this, text, "Annotations", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

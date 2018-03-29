@@ -459,6 +459,37 @@ namespace PdfiumViewer
         }
 
         /// <summary>
+        /// Get annotation count on the page.
+        /// </summary>
+        /// <param name="page">The page to get the annotation count for.</param>
+        /// <returns>Number of annotations on the page.</returns>
+        public int GetAnnotationCount(int page)
+        {
+            return _file.GetAnnotationCount(page);
+        }
+
+        /// <summary>
+        /// Get the annotation type of a specifi annotation on the page.
+        /// </summary>
+        /// <param name="page">The page to get the annotation from.</param>
+        /// <param name="index">Index of the annotation to get the type</param>
+        /// <returns>Type of the annotation.</returns>
+        public string GetAnnotationSubtype(int page, int index)
+        {
+            return _file.GetAnnotationSubtype(page, index);
+        }
+
+        public int GetAnnotationObjectCount(int page, int index)
+        {
+            return _file.GetAnnotationObjectCount(page, index);
+        }
+
+        public void GetAnnotationObjectTest(int page, int index)
+        {
+            _file.GetAnnotationObjectTest(page, index);
+        }
+
+        /// <summary>
         /// Get all bounding rectangles for the text span.
         /// </summary>
         /// <description>
